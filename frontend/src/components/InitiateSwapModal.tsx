@@ -4,7 +4,6 @@ import type { Wallet } from "../lib/walletKit";
 import "./InitiateSwapModal.css";
 
 const USDC_CONTRACT_ID = import.meta.env.VITE_CONTRACT_USDC ?? "";
-const ZK_VERIFIER_CONTRACT_ID = import.meta.env.VITE_CONTRACT_ZK_VERIFIER ?? "";
 const USDC_DECIMALS = 7; // Stellar USDC uses 7 decimal places
 
 export interface Listing {
@@ -80,7 +79,6 @@ export function InitiateSwapModal({ listing, wallet, onClose, onSuccess }: Props
         listing.owner,
         USDC_CONTRACT_ID,
         raw,
-        ZK_VERIFIER_CONTRACT_ID,
         wallet
       );
 
@@ -170,12 +168,12 @@ export function InitiateSwapModal({ listing, wallet, onClose, onSuccess }: Props
             {error && <p className="ism__error" role="alert">{error}</p>}
 
             <div className="ism__steps">
-              <div className={`ism__step ${step === "approving" ? "ism__step--active" : ""} ${(step === "initiating" || step === "success") ? "ism__step--done" : ""}`}>
+              <div className={`ism__step ${step === "approving" ? "ism__step--active" : ""} ${step === "initiating" ? "ism__step--done" : ""}`}>
                 <span className="ism__step-num">1</span>
                 <span>Approve USDC</span>
                 {step === "approving" && <span className="ism__spinner" aria-hidden="true" />}
               </div>
-              <div className={`ism__step ${step === "initiating" ? "ism__step--active" : ""} ${step === "success" ? "ism__step--done" : ""}`}>
+              <div className={`ism__step ${step === "initiating" ? "ism__step--active" : ""}`}>
                 <span className="ism__step-num">2</span>
                 <span>Initiate Swap</span>
                 {step === "initiating" && <span className="ism__spinner" aria-hidden="true" />}
